@@ -42,6 +42,7 @@ export class ProductsService {
       },
       include: {
         category: true,
+        images: true,
       },
     });
   }

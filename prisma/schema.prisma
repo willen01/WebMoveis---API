@@ -40,5 +40,19 @@ model Product {
 
   is_featured Boolean
 
+  images ProductImage[]
+
   @@map("product")
+}
+
+model ProductImage {
+  id Int @id @default(autoincrement())
+
+  product Product @relation(fields: [product_id], references: [id])
+
+  product_id  Int
+  image_url   String
+  description String
+
+  @@map("product_image")
 }
