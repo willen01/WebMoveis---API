@@ -15,6 +15,30 @@ model Category {
 
   name      String
   image_url String
+  products  Product[]
 
   @@map("category")
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+
+  name              String
+  image             String
+  short_description String
+  description       String
+  price             Int
+  discount          Int
+
+  width  Int
+  height Int
+  weigth Int
+  length Int
+
+  category_id Int
+  category    Category @relation(fields: [category_id], references: [id])
+
+  is_featured Boolean
+
+  @@map("product")
 }
