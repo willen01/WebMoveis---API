@@ -35,7 +35,7 @@ export class ProductsService {
     });
   }
 
-  findOne(id: number) {
+  findOne(id: number, includeCategory = true, includeImages = true) {
     return this.prisma.product.findFirst({
       where: {
         id: id,
