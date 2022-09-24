@@ -8,12 +8,14 @@ import {
   UseGuards,
   Get,
   Param,
+  Put,
 } from '@nestjs/common';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
+import { UpdateCustomerDto } from './dto/update-customer.dto';
 
 @Controller('customers')
 export class CustomersController {
@@ -61,5 +63,19 @@ export class CustomersController {
       req.user.id,
       +orderId,
     );
+  }
+
+  @Put('update-profile')
+  @UseGuards(JwtAuthGuard)
+  async updateProfile(
+    @Request() req,
+    @Body() updatecustomerDTO: UpdateCustomerDto,
+  ) {
+    const { password, ...customer } = await this.customersService.update(
+      req.user.id,
+      updatecustomerDTO,
+    );
+
+    return customer;
   }
 }
