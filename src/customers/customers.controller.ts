@@ -45,9 +45,11 @@ export class CustomersController {
     return this.authService.login(req.user);
   }
 
-  @Get('protegida')
+  @Get('orders')
   @UseGuards(JwtAuthGuard)
-  async teste() {
-    return 'rota protegida';
+  async teste(@Request() req) {
+    const { password, ...customer } =
+      await this.customersService.listCustomersOrders(req.user.id);
+    return customer;
   }
 }

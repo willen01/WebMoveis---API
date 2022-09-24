@@ -30,4 +30,23 @@ export class CustomersService {
       where: { email: email },
     });
   }
+
+  listCustomersOrders(customerId: number) {
+    return this.prisma.customer.findFirst({
+      where: {
+        id: customerId,
+      },
+      include: {
+        orders: {
+          include: {
+            products: {
+              include: {
+                product: true,
+              },
+            },
+          },
+        },
+      },
+    });
+  }
 }
