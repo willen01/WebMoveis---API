@@ -16,6 +16,7 @@ import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
+import { UpdatePasswordCustomerDto } from './dto/uptade-password-customer.dto';
 
 @Controller('customers')
 export class CustomersController {
@@ -75,7 +76,25 @@ export class CustomersController {
       req.user.id,
       updatecustomerDTO,
     );
-
     return customer;
+  }
+
+  @Put('update-password')
+  @UseGuards(JwtAuthGuard)
+  async updatePassword(
+    @Request() req,
+    @Body() updatePasswordCustomerDto: UpdatePasswordCustomerDto,
+  ) {
+    const { password, confirmPassword } = updatePasswordCustomerDto;
+    if (password != confirmPassword) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Incorrect Password confimation',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    await this.customersService.updatePassword(req.user.id, password);
   }
 }

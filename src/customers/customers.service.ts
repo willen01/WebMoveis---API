@@ -75,4 +75,15 @@ export class CustomersService {
       data: updateCustomerDTO,
     });
   }
+
+  updatePassword(customerId: number, newPlainTextPassword: string) {
+    return this.prisma.customer.update({
+      where: {
+        id: customerId,
+      },
+      data: {
+        password: this.preparePassword(newPlainTextPassword),
+      },
+    });
+  }
 }
