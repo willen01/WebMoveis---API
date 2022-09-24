@@ -7,6 +7,22 @@ const bcrypt = require('bcrypt');
 export class CustomersService {
   constructor(private readonly prisma: PrismaService) {}
 
+  listSingleOrderByCustomer(customerId: number, orderId: number) {
+    return this.prisma.order.findFirst({
+      where: {
+        customer_id: customerId,
+        id: orderId,
+      },
+      include: {
+        products: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    });
+  }
+
   create(createCustomerDto: CreateCustomerDto) {
     return this.prisma.customer.create({
       data: {
