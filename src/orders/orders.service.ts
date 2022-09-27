@@ -5,6 +5,18 @@ import { CreateOrderDto } from './dto/create-order.dto';
 @Injectable()
 export class OrdersService {
   constructor(private readonly prisma: PrismaService) {}
+
+  updateOrderStatus(info) {
+    return this.prisma.order.update({
+      where: {
+        id: +info.orderId,
+      },
+      data: {
+        status: info.status,
+      },
+    });
+  }
+
   create(customerId: number, createOrderDto: CreateOrderDto) {
     return this.prisma.order.create({
       include: {
