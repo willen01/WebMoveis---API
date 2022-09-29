@@ -8,9 +8,10 @@ import { CustomersModule } from './customers/customers.module';
 import { AuthModule } from './auth/auth.module';
 import { OrdersModule } from './orders/orders.module';
 import { PagseguroModule } from './pagseguro/pagseguro.module';
+import { KafkaModule } from './kafka/kafka.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), CategoriesModule, ProductsModule, ShippingsModule, CustomersModule, AuthModule, OrdersModule, PagseguroModule],
+  imports: [ConfigModule.forRoot(), CategoriesModule, ProductsModule, ShippingsModule, CustomersModule, AuthModule, OrdersModule, PagseguroModule, KafkaModule],
   controllers: [AppController],
   providers: [],
 })

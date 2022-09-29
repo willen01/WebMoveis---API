@@ -3,8 +3,10 @@ import { OrdersService } from './orders.service';
 import { OrdersController } from './orders.controller';
 import { PrismaService } from 'src/prisma.service';
 import { PagseguroService } from 'src/pagseguro/pagseguro.service';
+import { KafkaModule } from 'src/kafka/kafka.module';
 
 @Module({
+  imports: [KafkaModule],
   controllers: [OrdersController],
   providers: [OrdersService, PrismaService, PagseguroService],
 })
