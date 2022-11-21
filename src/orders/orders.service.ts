@@ -66,14 +66,14 @@ export class OrdersService {
         customer: {
           connect: {
             id: customerId,
-          },
+          }
         },
         products: {
           createMany: {
-            data: createOrderDto.products,
-          },
-        },
-      },
+            data: createOrderDto.products
+          }
+        }
+     },
     });
   }
 }

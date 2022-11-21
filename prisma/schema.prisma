@@ -73,8 +73,15 @@ model Customer {
 
 enum OrderStatus {
   WaitingForPayment
+  UnderAnalysis
+  Available
+  InDispute
+  Returned
+  Canceled
+  Debited
+  TemporaryRetention
   Paid
-}
+  }
 
 model Order {
   id Int @id @default(autoincrement())

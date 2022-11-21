@@ -2,7 +2,14 @@ import { IsDateString, IsEnum, IsNotEmpty, IsNumber } from "class-validator"
 
 export enum OrderStatus {
     WaitingForPayment = "WaitingForPayment",
-    Paid = "Paid"
+    Paid = "Paid",
+    UnderAnalysis = "UnderAnalysis",
+    Available = 'Available',
+    InDispute = 'InDispute',
+    Returned = 'Returned',
+    Canceled = 'Canceled',
+    Debited = 'Debited',
+    TemporaryRetention = 'TemporaryRetention',
 }
 
 export class Order {
@@ -37,7 +44,7 @@ export class Order {
 
     @IsNotEmpty()
     city: string
- 
+
     @IsNotEmpty()
     state: string
 
