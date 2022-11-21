@@ -4,9 +4,10 @@ import { PagseguroController } from './pagseguro.controller';
 import { PrismaService } from 'src/prisma.service';
 import { OrdersService } from 'src/orders/orders.service';
 import { KafkaModule } from 'src/kafka/kafka.module';
+import { ShippingsModule } from 'src/shippings/shippings.module';
 
 @Module({
-  imports: [KafkaModule],
+  imports: [KafkaModule, ShippingsModule],
   providers: [PagseguroService, PrismaService, OrdersService],
   controllers: [PagseguroController],
 })

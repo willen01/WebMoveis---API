@@ -11,9 +11,9 @@ export class ShippingsController {
     const shipping = await this.shippingsService.findShipping(query);
 
     return {
-      type: shipping[0].name,
-      deadline: `${shipping[0].prazoEntrega} dia(s)`,
-      price: shipping[0].valor,
+      type: shipping.shipping[0].name,
+      deadline: `${shipping.shipping[0].prazoEntrega} dia(s)`,
+      price: shipping.shipping[0].valor,
     };
   }
 }

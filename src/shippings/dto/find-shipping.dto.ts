@@ -2,7 +2,7 @@ import { IsNotEmpty } from 'class-validator';
 
 export class FindShippingDTO {
   @IsNotEmpty()
-  products: string;
+  products: any;
 
   @IsNotEmpty()
   zipcode: string;

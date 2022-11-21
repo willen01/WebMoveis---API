@@ -7,5 +7,6 @@ import { ProductsModule } from 'src/products/products.module';
   imports: [ProductsModule],
   controllers: [ShippingsController],
   providers: [ShippingsService],
+  exports: [ShippingsService]
 })
 export class ShippingsModule {}

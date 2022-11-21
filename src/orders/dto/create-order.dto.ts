@@ -7,6 +7,8 @@ export class CreateOrderDto extends OmitType(Order, [
   'id',
   'customer_id',
   'date',
+  'total',
+  'shipping_price'
 ]) {
   @IsNotEmpty()
   products: ProductOrder[];

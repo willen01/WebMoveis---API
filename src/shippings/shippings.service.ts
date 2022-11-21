@@ -11,12 +11,13 @@ export class ShippingsService {
     const zipcode = query.zipcode;
     const products = JSON.parse(query.products);
 
-    const shippingsParams = {
+    let shippingsParams = {
       totalWeigth: 0,
       width: 0,
       height: 0,
       length: 0,
       totalPrice: 0,
+      shipping: []
     };
     for (const product of products) {
       const p = await this.productService.findOne(product.id, false, false);
@@ -40,6 +41,9 @@ export class ShippingsService {
       .largura(shippingsParams.width)
       .precoPrazo(+zipcode);
 
-    return shipping;
+
+    shippingsParams.shipping = shipping 
+
+    return shippingsParams;
   }
 }
