@@ -85,7 +85,7 @@ export class CustomersController {
     @Request() req,
     @Body() updatePasswordCustomerDto: UpdatePasswordCustomerDto,
   ) {
-    const { password, confirmPassword } = updatePasswordCustomerDto;
+    const { password, confirmPassword, previousPassword } = updatePasswordCustomerDto;
     if (password != confirmPassword) {
       throw new HttpException(
         {
@@ -95,6 +95,20 @@ export class CustomersController {
         HttpStatus.BAD_REQUEST,
       );
     }
+
+    //verifica se o campo previousPassword é compatível com o password já armazenado no banco
+    const confirmPreviousPassword = await this.customersService.comparePreviousPassword(req.id, previousPassword);
+ 
+    if(!confirmPreviousPassword) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Incorrect Previous Password',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     await this.customersService.updatePassword(req.user.id, password);
   }
 }

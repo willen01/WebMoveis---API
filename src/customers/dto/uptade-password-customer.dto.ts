@@ -6,4 +6,7 @@ export class UpdatePasswordCustomerDto {
 
   @IsNotEmpty()
   confirmPassword: string;
+  
+  @IsNotEmpty()
+  previousPassword: string;
 }

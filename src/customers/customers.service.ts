@@ -86,4 +86,13 @@ export class CustomersService {
       },
     });
   }
+
+  async comparePreviousPassword(customerId: number, previousPassword: string){
+    const customer = await this.prisma.customer.findFirst({
+      where: {id: customerId}
+    })
+
+    return this.comparePassword(previousPassword, customer.password)
+  }
+
 }
