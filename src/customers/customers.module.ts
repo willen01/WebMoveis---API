@@ -3,9 +3,10 @@ import { CustomersService } from './customers.service';
 import { CustomersController } from './customers.controller';
 import { PrismaService } from 'src/prisma.service';
 import { AuthModule } from 'src/auth/auth.module';
+import { PagseguroModule } from 'src/pagseguro/pagseguro.module';
 
 @Module({
-  imports: [AuthModule],
+  imports: [AuthModule, PagseguroModule],
   controllers: [CustomersController],
   providers: [CustomersService, PrismaService],
 })

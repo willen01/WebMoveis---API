@@ -10,5 +10,6 @@ import { ShippingsModule } from 'src/shippings/shippings.module';
   imports: [KafkaModule, ShippingsModule],
   providers: [PagseguroService, PrismaService, OrdersService],
   controllers: [PagseguroController],
+  exports: [PagseguroService]
 })
 export class PagseguroModule {}

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { PagseguroService } from 'src/pagseguro/pagseguro.service';
 import { PrismaService } from 'src/prisma.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
@@ -6,10 +7,13 @@ const bcrypt = require('bcrypt');
 
 @Injectable()
 export class CustomersService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly pagSeguroService: PagseguroService
+  ) { }
 
-  listSingleOrderByCustomer(customerId: number, orderId: number) {
-    return this.prisma.order.findFirst({
+  async listSingleOrderByCustomer(customerId: number, orderId: number) {
+    const order = await this.prisma.order.findFirst({
       where: {
         customer_id: customerId,
         id: orderId,
@@ -22,6 +26,19 @@ export class CustomersService {
         },
       },
     });
+
+    //verifica se o pedido ainda está pendente de pagamento e envia a url para pagamento
+    if (order.status == "WaitingForPayment") {
+      //url de checkout
+      const checkoutUrl = await this.pagSeguroService.generateCheckout(order);
+
+      return {
+        order,
+        urlForPayment: checkoutUrl
+      }
+    }
+
+    return order
   }
 
   create(createCustomerDto: CreateCustomerDto) {
@@ -87,9 +104,9 @@ export class CustomersService {
     });
   }
 
-  async comparePreviousPassword(customerId: number, previousPassword: string){
+  async comparePreviousPassword(customerId: number, previousPassword: string) {
     const customer = await this.prisma.customer.findFirst({
-      where: {id: customerId}
+      where: { id: customerId }
     })
 
     return this.comparePassword(previousPassword, customer.password)
