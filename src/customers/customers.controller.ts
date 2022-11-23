@@ -13,6 +13,7 @@ import {
 import { AuthService } from 'src/auth/auth.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
+import { KafkaService } from 'src/kafka/kafka.service';
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
@@ -23,6 +24,7 @@ export class CustomersController {
   constructor(
     private readonly customersService: CustomersService,
     private readonly authService: AuthService,
+    private readonly kafkaService: KafkaService
   ) {}
 
   @Post('register')
@@ -108,6 +110,13 @@ export class CustomersController {
         HttpStatus.BAD_REQUEST,
       );
     }
+
+    //envio de notificação ao mudar a senha 
+    await this.kafkaService.sendEmail({
+      destination:[req.user.email],
+      message: `Atenção ${req.user.name}, sua senha foi modificada`,
+      subject: `Aviso de mudança de senha`
+    })
 
     await this.customersService.updatePassword(req.user.id, password);
   }
