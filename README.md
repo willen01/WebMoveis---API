@@ -32,10 +32,13 @@ Aplicação backend para o e-commerce webmoveis--api
 
 ### Desafios
 
-[X] Deve calcular o valor de frete direto no backend
-[X] Deve calcular valor da compra no backend
-[X] Deve pedir senha anterior ao trocar de senha
-[x] Deve adcionar novos status de compra além de WaitingForPayment e Paid
-[x] No endpoint de detalhes de pedido deve exibir o link de pagamento caso o pedido ainda não tenha sido pago
-[x] Deve enviar um email quando a senha do usuário é trocada
-[x] Deve remover o próprio produto da lista de produtos relacionados
+- [x] Deve calcular o valor de frete direto no backend
+- [x] Deve calcular valor da compra no backend
+- [X] Deve pedir senha anterior ao trocar de senha
+- [x] Deve adcionar novos status de compra além de WaitingForPayment e Paid
+- [x] No endpoint de detalhes de pedido deve exibir o link de pagamento caso o pedido ainda não tenha sido pago
+- [x] Deve enviar um email quando a senha do usuário é trocada
+- [x] Deve remover o próprio produto da lista de produtos relacionados
+
+### Observações
+Os trechos de código comentados com `desafio` referem-se a resolução dos desafios propostos
