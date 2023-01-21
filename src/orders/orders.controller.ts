@@ -35,8 +35,9 @@ export class OrdersController {
     const checkoutUrl = await this.pagseguroService.generateCheckout(newOrder);
 
     await this.kafkaService.sendEmail({
+      Username: req.user.name,
       destination: [newOrder.customer.email],
-      message: `Recebemos seu pedido. Por favor, efetue o pagamento: <a href="${checkoutUrl}">Clique aqui para pagar`,
+      message: `recebemos seu pedido. Por favor, efetue o pagamento: <a href="${checkoutUrl}">Clique aqui para pagar`,
       subject: `Pedido #${newOrder.id} recebido`,
     });
 

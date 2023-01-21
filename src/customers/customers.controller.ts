@@ -118,6 +118,7 @@ export class CustomersController {
 
     //DESAFIO - Envia um email quando a senha é modificada
     await this.kafkaService.sendEmail({
+      Username: req.user.name,
       destination: [req.user.email],
       message: `Atenção ${req.user.name}, sua senha foi modificada`,
       subject: `Aviso de mudança de senha`,
