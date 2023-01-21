@@ -33,7 +33,7 @@ export class OrdersController {
     );
 
     const checkoutUrl = await this.pagseguroService.generateCheckout(newOrder);
-
+    //Desafio - Envia variável username para personalização de email com o nome do usuário
     await this.kafkaService.sendEmail({
       Username: req.user.name,
       destination: [newOrder.customer.email],
