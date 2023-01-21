@@ -20,6 +20,7 @@ export class PagseguroController {
     const order = await this.orderService.findOrderById(+info.orderId);
 
     await this.kafkaservice.sendEmail({
+      Username: order.customer.name,
       destination: [order.customer.email],
       subject: `Pedido #${order.id} atualizado`,
       message: `Atualização  no status do pedido #${order.id}. Novo status: ${info.status}`,

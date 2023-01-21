@@ -19,6 +19,7 @@ export class OrdersService {
         customer: {
           select: {
             email: true,
+            name: true,
           },
         },
       },
