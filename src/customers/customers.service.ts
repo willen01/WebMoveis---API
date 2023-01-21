@@ -9,8 +9,8 @@ const bcrypt = require('bcrypt');
 export class CustomersService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly pagSeguroService: PagseguroService
-  ) { }
+    private readonly pagSeguroService: PagseguroService,
+  ) {}
 
   async listSingleOrderByCustomer(customerId: number, orderId: number) {
     const order = await this.prisma.order.findFirst({
@@ -27,18 +27,18 @@ export class CustomersService {
       },
     });
 
-    //verifica se o pedido ainda está pendente de pagamento e envia a url para pagamento
-    if (order.status == "WaitingForPayment") {
+    //DESAFIO - verifica se o pedido ainda está pendente de pagamento e envia a url para pagamento
+    if (order.status == 'WaitingForPayment') {
       //url de checkout
       const checkoutUrl = await this.pagSeguroService.generateCheckout(order);
 
       return {
         order,
-        urlForPayment: checkoutUrl
-      }
+        urlForPayment: checkoutUrl,
+      };
     }
 
-    return order
+    return order;
   }
 
   create(createCustomerDto: CreateCustomerDto) {
@@ -106,10 +106,9 @@ export class CustomersService {
 
   async comparePreviousPassword(customerId: number, previousPassword: string) {
     const customer = await this.prisma.customer.findFirst({
-      where: { id: customerId }
-    })
+      where: { id: customerId },
+    });
 
-    return this.comparePassword(previousPassword, customer.password)
+    return this.comparePassword(previousPassword, customer.password);
   }
-
 }

@@ -71,6 +71,7 @@ model Customer {
   @@map("customer")
 }
 
+//DESAFIO - adciona novos status de pedido além de WaitingForPayment e Paid
 enum OrderStatus {
   WaitingForPayment
   UnderAnalysis
@@ -81,7 +82,7 @@ enum OrderStatus {
   Debited
   TemporaryRetention
   Paid
-  }
+}
 
 model Order {
   id Int @id @default(autoincrement())

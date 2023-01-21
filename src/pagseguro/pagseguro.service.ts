@@ -3,6 +3,7 @@ import axios from 'axios';
 const qs = require('qs');
 const convert = require('xml-js');
 
+//DESAFIO - adciona novos status de pedido além de WaitingForPayment e Paid
 const OrderStatusMap = {
   1: 'WaitingForPayment',
   2: 'UnderAnalysis',

@@ -24,7 +24,7 @@ export class CustomersController {
   constructor(
     private readonly customersService: CustomersService,
     private readonly authService: AuthService,
-    private readonly kafkaService: KafkaService
+    private readonly kafkaService: KafkaService,
   ) {}
 
   @Post('register')
@@ -87,7 +87,8 @@ export class CustomersController {
     @Request() req,
     @Body() updatePasswordCustomerDto: UpdatePasswordCustomerDto,
   ) {
-    const { password, confirmPassword, previousPassword } = updatePasswordCustomerDto;
+    const { password, confirmPassword, previousPassword } =
+      updatePasswordCustomerDto;
     if (password != confirmPassword) {
       throw new HttpException(
         {
@@ -98,10 +99,14 @@ export class CustomersController {
       );
     }
 
-    //verifica se o campo previousPassword é compatível com o password já armazenado no banco
-    const confirmPreviousPassword = await this.customersService.comparePreviousPassword(req.id, previousPassword);
- 
-    if(!confirmPreviousPassword) {
+    //DESAFIO - Faz a verificação da senha anterior
+    const confirmPreviousPassword =
+      await this.customersService.comparePreviousPassword(
+        req.id,
+        previousPassword,
+      );
+
+    if (!confirmPreviousPassword) {
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
@@ -111,12 +116,12 @@ export class CustomersController {
       );
     }
 
-    //envio de notificação ao mudar a senha 
+    //DESAFIO - Envia um email quando a senha é modificada
     await this.kafkaService.sendEmail({
-      destination:[req.user.email],
+      destination: [req.user.email],
       message: `Atenção ${req.user.name}, sua senha foi modificada`,
-      subject: `Aviso de mudança de senha`
-    })
+      subject: `Aviso de mudança de senha`,
+    });
 
     await this.customersService.updatePassword(req.user.id, password);
   }

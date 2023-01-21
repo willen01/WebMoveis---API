@@ -22,8 +22,10 @@ export class ProductsController {
       limit: 4,
     });
 
-    //remove próprio produto da lista de relacionados
-    const filteredRelatedProducts = relatedProducts.filter(products => products.id != product.id );
+    //DESAFIO - remove próprio produto da lista de relacionados
+    const filteredRelatedProducts = relatedProducts.filter(
+      (products) => products.id != product.id,
+    );
     return {
       ...product,
       relatedProducts: filteredRelatedProducts,

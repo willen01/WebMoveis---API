@@ -8,7 +8,7 @@ export class OrdersService {
   constructor(
     private readonly shippingService: ShippingsService,
     private readonly prisma: PrismaService,
-  ) { }
+  ) {}
 
   findOrderById(orderId: number) {
     return this.prisma.order.findFirst({
@@ -37,13 +37,15 @@ export class OrdersService {
   }
 
   async create(customerId: number, createOrderDto: CreateOrderDto) {
+    //DESAFIO - calcula o valor da compra direto no backend
+    const productsData = await this.shippingService.findShipping({
+      zipcode: createOrderDto.postal_code,
+      products: JSON.stringify(createOrderDto.products),
+    });
 
-    //dados do produto como preço total e frete total
-    const productsData = await this.shippingService.findShipping({zipcode: createOrderDto.postal_code,  products:JSON.stringify(createOrderDto.products)})
-
-    // valo total do frete
-    let shipping = productsData.shipping[0].valor.replace(",", "")
-    let total_shipping = Number(shipping) 
+    // DESAFIO - Calcula o valor do frete diretamente no backend
+    let shipping = productsData.shipping[0].valor.replace(',', '');
+    let total_shipping = Number(shipping);
 
     return this.prisma.order.create({
       include: {
@@ -66,14 +68,14 @@ export class OrdersService {
         customer: {
           connect: {
             id: customerId,
-          }
+          },
         },
         products: {
           createMany: {
-            data: createOrderDto.products
-          }
-        }
-     },
+            data: createOrderDto.products,
+          },
+        },
+      },
     });
   }
 }
